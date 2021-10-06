@@ -5,6 +5,8 @@ import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import compression from 'compression';
 
+import astronautRouter from './Routes/astronautRouter';
+
 const app: Application = express();
 
 // CORS
@@ -30,5 +32,8 @@ app.use(mongoSanitize());
 
 // comprossion
 app.use(compression());
+
+// routes
+app.use('/api/v1/astronauts', astronautRouter);
 
 export default app;
