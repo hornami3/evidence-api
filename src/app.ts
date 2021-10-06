@@ -6,6 +6,8 @@ import mongoSanitize from 'express-mongo-sanitize';
 import compression from 'compression';
 
 import astronautRouter from './Routes/astronautRouter';
+import errorController from './Controllers/errorController';
+import AppError from './util/appError';
 
 const app: Application = express();
 
@@ -35,5 +37,11 @@ app.use(compression());
 
 // routes
 app.use('/api/v1/astronauts', astronautRouter);
+
+app.all('*', (req: Request, res: Response, next: NextFunction) => {
+    next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
+});
+
+app.use(errorController);
 
 export default app;
